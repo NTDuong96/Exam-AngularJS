@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS exam</title>
+    <script src="angular.min.js"></script>
+</head>
+<body>
+<h3>Eastern Coffee</h3>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+<form name="myForm">
+    Choose drinks
+    <select name="Drinks" ng-model="Menu" id="Menu">
+        <option value="30000">Coffee</option>
+        <option value="35000">Tea</option>
+        <option value="35000">Yogurt</option>
+        <option value="25000">Smoothies</option>
+        <span ng-show="myForm.Menu.$untouched">Please choose the drinks :D</span>
+    </select>
+    <br>
+    <br>
+</form>
+<!--Cho phép người dùng chọn loại đồ uống + giá đồ uống trong phần miêu tả-->
+    <input type="number" ng-model="Qty" id="Qty" name="Qty" required min="1"><br>
+        <span ng-show="myForm.Qty.$touched && myForm.Qty.$invalid">Please reselect the amount</span>
+    <br>
+    <br>
+        Size
+        <select ng-model="Size">
+            <option value="1">M</option>
+            <option value="1.2">L</option>
+        </select>
+    <input type="button" value="Cost" ng-click="Calc()"/><br>
+        <h3>VAT : {{tax | currency : 'VND '}}</h3>
+        <h3>Total price : {{total | currency : 'VND '}}</h3>
+</div>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller('myCtrl', function ($scope){
+        $scope.Qty = 0;
+        $scope.Menu = 0;
+        $scope.tax = 0;
+        $scope.total = "";
+        $scope.Calc = function (){
+
+            $scope.tax =  $scope.Qty*($scope.Menu*$scope.Size)*0.1;
+            $scope.total =   $scope.Qty * $scope.Menu *$scope.Size + $scope.tax;
+        }
+    });
+</script>
+</body>
+</html>
